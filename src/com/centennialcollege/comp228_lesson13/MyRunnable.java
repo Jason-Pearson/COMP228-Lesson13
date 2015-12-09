@@ -3,10 +3,11 @@ package com.centennialcollege.comp228_lesson13;
 public class MyRunnable implements Runnable { // A Runnable interface - not a thread
 
 	// PRIVATE INSTANCE VARIABLES
-	private String _name;
+	private int _sequence;
 
-	public MyRunnable(String name) {
-		this._name = name;
+	//CONSTRUCTOR - takes in user input for the number of terms
+	public MyRunnable(int fib) {
+		this._sequence = fib;
 	}
 
 	@Override
@@ -15,18 +16,18 @@ public class MyRunnable implements Runnable { // A Runnable interface - not a th
 	}
 
 	
-	private void Task1() {
-		// TASK 1 - a for loop
-		for (int index = 0; index < 10; index++) {
-			System.out.println("Runnable " + this._name + " Count: " + index);
-			try { // after task is executed with no exception error
-				Thread.sleep(1000); // sleep has the thread (task - to run the
-									// for loop) pause/wait for a set amount of
-									// milliseconds - 1000ms = 1s
-			} catch (InterruptedException e) {
-				System.err.println("Runnable Interrupted: " + e);
-			}
-		}
+	private synchronized void Task1() {
+		// TASK 1 - Display Fibonacci Sequence
+        int[] feb = new int[this._sequence];
+        feb[0] = 0;
+        feb[1] = 1;
+        //Assign each array-item (the term) the correct number
+        for(int i=2; i < this._sequence; i++){
+            feb[i] = feb[i-1] + feb[i-2];
+        }
+        //Display the Fibonacci Sequence up to the requested terms 
+        for(int i=0; i< this._sequence; i++){
+                System.out.println("Term " + i + ": "+ feb[i]);
+        }
 	}
-
 }
